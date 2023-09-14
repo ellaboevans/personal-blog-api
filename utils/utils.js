@@ -7,9 +7,9 @@ const STATUS = {
     code: 201,
     message: 'Posts Successfully Created'
   },
-  UPDATED: {
+  NO_CONTENT: {
     code: 204,
-    message: 'Post Successfully Updated'
+    message: 'Post Removed Successfully'
   },
   NOT_FOUND: {
     code: 404,

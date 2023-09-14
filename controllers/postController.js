@@ -83,7 +83,7 @@ const blogControllers = {
         res.status(STATUS.NOT_FOUND.code).json(STATUS.NOT_FOUND.message)
         return
       }
-      await res.status(STATUS.SUCCESS.code).json(STATUS.SUCCESS.message)
+      await res.status(STATUS.NO_CONTENT.code).json(STATUS.NO_CONTENT.message)
     } catch (error) {
       console.error(error)
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
