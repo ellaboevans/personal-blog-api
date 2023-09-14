@@ -4,11 +4,14 @@ const Post = require('../models/post')
 const supertest = require('supertest')
 
 describe('Testing Server and Endpoints on the -> API', () => {
+  const app = createServer()
+  let request
   beforeEach(() => {
     connect(
       `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_SECRET_KEY}@node-course.ina7eck.mongodb.net/${process.env.TEST_DB}`,
       { useNewUrlParser: true }
     )
+    request = supertest(app)
   })
 
   afterEach(() => {
@@ -17,7 +20,6 @@ describe('Testing Server and Endpoints on the -> API', () => {
     })
   })
 
-  const app = createServer()
   test('GET all posts from -> /api/v1/posts', async () => {
     const post = await Post.create({
       title: 'Post 1',
@@ -25,7 +27,7 @@ describe('Testing Server and Endpoints on the -> API', () => {
       author: 'Evans Elabo',
       tag: 'Testing Server 1'
     })
-    await supertest(app)
+    await request
       .get('/api/v1/posts')
       .expect(200)
       .then((response) => {
@@ -46,7 +48,7 @@ describe('Testing Server and Endpoints on the -> API', () => {
       author: 'Evans Elabo',
       tag: 'Testing Server 2'
     })
-    await supertest(app)
+    await request
       .get(`/api/v1/posts/${post.slug}`)
       .expect(200)
       .then((response) => {
@@ -63,7 +65,7 @@ describe('Testing Server and Endpoints on the -> API', () => {
       author: 'Evans Elabo',
       tag: 'Testing Server 3'
     }
-    await supertest(app).post('/api/v1/posts/').send(post).expect(201)
+    await request.post('/api/v1/posts/').send(post).expect(201)
   }, 500000)
   test('PATCH to update post with -> /api/v1/:postId', async () => {
     const post = await Post.create({
@@ -76,7 +78,7 @@ describe('Testing Server and Endpoints on the -> API', () => {
       title: 'Update test title',
       author: 'Code Concept'
     }
-    await supertest(app)
+    await request
       .patch(`/api/v1/posts/${post.id}`)
       .send(updatingData)
       .expect(200)
@@ -94,7 +96,7 @@ describe('Testing Server and Endpoints on the -> API', () => {
       author: 'Evans Elabo',
       tag: 'Testing Server 5'
     })
-    await supertest(app)
+    await request
       .delete(`/api/v1/posts/${post.id}`)
       .expect(204)
       .then(async () => {
