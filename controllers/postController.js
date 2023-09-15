@@ -25,20 +25,8 @@ const blogControllers = {
     }
   },
   createPost: async (req, res) => {
-    const { title, content, author, tag, username, image } = req.body
     try {
-      if (!title || !content || !username) {
-        res.status(STATUS.BAD_REQUEST.code).json(STATUS.BAD_REQUEST.message)
-        return
-      }
-      const post = new Post({
-        title,
-        content,
-        author,
-        tag,
-        username,
-        image
-      })
+      const post = new Post(req.body)
       const createdPost = await post.save()
       res.status(STATUS.CREATED.code).json(createdPost)
       return
@@ -66,9 +54,10 @@ const blogControllers = {
   },
   updatePost: async (req, res) => {
     const { postId } = req.params
+    const { username } = req.body
     try {
       const post = await Post.findById(postId)
-      if (post.username === req.body.username) {
+      if (post.username === username) {
         try {
           const updatedPost = await Post.findByIdAndUpdate(
             postId,
@@ -83,7 +72,7 @@ const blogControllers = {
           res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
         }
       } else {
-        res.status(401).json('You can only update post!')
+        res.status(STATUS.UNAUTHORIZED.code).json(STATUS.UNAUTHORIZED.message)
       }
     } catch (error) {
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
@@ -91,9 +80,10 @@ const blogControllers = {
   },
   deletePost: async (req, res) => {
     const { postId } = req.params
+    const { username } = req.body
     try {
       const post = await Post.findById(postId)
-      if (post.username === req.body.username) {
+      if (post.username === username) {
         try {
           await Post.findByIdAndDelete(postId)
           res
@@ -104,7 +94,7 @@ const blogControllers = {
           res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
         }
       } else {
-        res.status(401).json('You can only update post!')
+        res.status(STATUS.UNAUTHORIZED.code).json(STATUS.UNAUTHORIZED.message)
       }
     } catch (error) {
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)

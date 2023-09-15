@@ -23,6 +23,10 @@ const STATUS = {
     code: 400,
     message: 'Fields cannot be blank'
   },
+  UNAUTHORIZED: {
+    code: 401,
+    message: 'Your are not authorized!'
+  },
   SERVER_ERROR: {
     code: 500,
     message: 'Server Not Responding'

@@ -35,7 +35,7 @@ const userController = {
         res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
       }
     } else {
-      res.status(401).json('You can only update your account!')
+      res.status(STATUS.UNAUTHORIZED.code).json(STATUS.UNAUTHORIZED.message)
     }
   },
   deleteUser: async (req, res) => {
@@ -61,7 +61,7 @@ const userController = {
         res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
       }
     } else {
-      res.status(401).json('You can only delete your account!')
+      res.status(STATUS.UNAUTHORIZED.code).json(STATUS.UNAUTHORIZED.message)
     }
   }
 }
