@@ -1,35 +1,35 @@
 const STATUS = {
   SUCCESS: {
     code: 200,
-    message: 'Request Has Successfull Been Fulfiled'
+    message: 'Request Fulfiled Successfully'
   },
   CREATED: {
     code: 201,
-    message: 'Posts Successfully Created'
+    message: 'Posts Successfully Created!'
   },
   NO_CONTENT: {
     code: 204,
-    message: 'Post Removed Successfully'
+    message: 'Post Removed Successfully!'
   },
   NOT_FOUND: {
     code: 404,
-    message: 'Posts Not Found'
+    message: 'Posts Not Found!'
   },
   NOT_MODIFIED: {
     code: 304,
-    message: 'Could Not Update Post'
+    message: 'Could Not Update Post!'
   },
   BAD_REQUEST: {
     code: 400,
-    message: 'Fields cannot be blank'
+    message: 'Fields Cannot Be Blank!'
   },
   UNAUTHORIZED: {
     code: 401,
-    message: 'Your are not authorized!'
+    message: 'Sorry! You Are Not Authorized!'
   },
   SERVER_ERROR: {
     code: 500,
-    message: 'Server Not Responding'
+    message: 'Server Not Responding!'
   }
 }
 
