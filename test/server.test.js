@@ -1,6 +1,6 @@
 const { connect, connection } = require('mongoose')
 const createServer = require('../utils/server')
-const Post = require('../models/post')
+const Post = require('../models/Post')
 const supertest = require('supertest')
 
 describe('Testing Server and Endpoints on the -> API', () => {

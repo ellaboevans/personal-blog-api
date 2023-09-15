@@ -21,7 +21,7 @@ const STATUS = {
   },
   BAD_REQUEST: {
     code: 400,
-    message: 'All Fields Are Required Except "tag"'
+    message: 'Fields cannot be blank'
   },
   SERVER_ERROR: {
     code: 500,
