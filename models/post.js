@@ -14,6 +14,9 @@ const PostSchema = Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String
+  },
   tag: String,
   createdAt: {
     type: Date,

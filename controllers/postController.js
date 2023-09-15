@@ -36,6 +36,9 @@ const blogControllers = {
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
     }
   },
+  upload: async (req, res) => {
+    res.status(STATUS.CREATED.code).json(STATUS.CREATED.message)
+  },
   getSinglePost: async (req, res) => {
     const { slug } = req.params
     try {
