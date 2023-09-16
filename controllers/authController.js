@@ -74,11 +74,11 @@ const authController = {
   },
   profile: (req, res) => {
     const { token } = req.cookies
-    const Verified = jwt.verify(token, process.env.JWT_SECRET_KEY)
-    if (!Verified) {
+    const verified = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    if (verified === null) {
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
     }
-    res.status(STATUS.SUCCESS.code).json(Verified)
+    res.status(STATUS.SUCCESS.code).json(verified)
   },
   logoutUser: (req, res) => {
     res
