@@ -8,4 +8,10 @@ router.post('/register', authController.registerUser)
 //Login
 router.post('/login', authController.loginUser)
 
+//Profile
+router.post('/profile', authController.profile)
+
+//Logout
+router.post('/logout', authController.logoutUser)
+
 module.exports = router

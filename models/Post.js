@@ -8,6 +8,10 @@ const PostSchema = Schema(
       required: true,
       unique: true
     },
+    summary: {
+      type: String,
+      required: true
+    },
     content: {
       type: String,
       required: true
@@ -16,14 +20,10 @@ const PostSchema = Schema(
       type: String,
       required: false
     },
-    username: {
+    image: {
       type: String,
-      required: true
+      default: ''
     },
-    categories: {
-      type: Array
-    },
-    image: String,
     tag: String,
     slug: String
   },

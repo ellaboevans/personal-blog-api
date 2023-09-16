@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const { STATUS } = require('../utils/utils.js')
 
 const authController = {
@@ -46,19 +47,44 @@ const authController = {
       }
       //compare the hashedPassword to login user
       let userPassword = req.body.password
-      const validated = await bcrypt.compare(userPassword, isUser.password)
-      if (!validated) {
+      const isValidated = await bcrypt.compare(userPassword, isUser.password)
+      if (isValidated) {
+        //User is logged in
+        const token = jwt.sign(
+          { username, id: isUser._id },
+          process.env.JWT_SECRET_KEY
+        )
+        if (!token) {
+          res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
+        }
+        res
+          .status(STATUS.SUCCESS.code)
+          .cookie('token', token)
+          .json(STATUS.SUCCESS.message)
+      } else {
         res
           .status(STATUS.BAD_REQUEST.code)
           .json('Wrong Credentials, please try again!')
         return
       }
-      const { password, ...info } = isUser._doc
-      res.status(STATUS.SUCCESS.code).json(info)
     } catch (error) {
       console.error(error)
       res.status(STATUS.SERVER_ERROR).json(STATUS.SERVER_ERROR.message)
     }
+  },
+  profile: (req, res) => {
+    const { token } = req.cookies
+    const Verified = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    if (!Verified) {
+      res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
+    }
+    res.status(STATUS.SUCCESS.code).json(Verified)
+  },
+  logoutUser: (req, res) => {
+    res
+      .status(STATUS.SUCCESS.code)
+      .cookie('token', '')
+      .json(STATUS.SUCCESS.message)
   }
 }
 

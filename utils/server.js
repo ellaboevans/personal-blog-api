@@ -1,26 +1,27 @@
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
 require('dotenv').config()
 
-const api_v1_Route = require('../routes/api_v1')
+const api_v1_Route = require('../routes/post')
 const authRoute = require('../routes/auth')
-const userRoute = require('../routes/users')
-const categoriesRoute = require('../routes/categories')
 
 const createServer = () => {
+  //App Initialization
   const app = express()
 
   //Middlewares
+  app.use(cors())
   app.use(morgan('short'))
   app.use(express.json())
   app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(cookieParser())
 
   //Routes
   app.use('/api/v1/posts', api_v1_Route)
   app.use('/api/v1/auth', authRoute)
-  app.use('/api/v1/users', userRoute)
-  app.use('/api/v1/categories', categoriesRoute)
   return app
 }
 
