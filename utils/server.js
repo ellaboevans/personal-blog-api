@@ -18,6 +18,8 @@ const createServer = () => {
   app.use(express.json())
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(cookieParser())
+  //serve static files
+  app.use('/uploads', express.static('uploads'))
 
   //Routes
   app.use('/api/v1/posts', api_v1_Route)

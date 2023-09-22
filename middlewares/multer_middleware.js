@@ -4,14 +4,11 @@ const path = require('path')
 const multerConfig = () => {
   const multerStorage = multer.diskStorage({
     destination: (request, file, callback) => {
-      callback(null, 'public')
+      callback(null, 'uploads')
     },
     filename: (request, file, callback) => {
       const extenstion = file.mimetype.split('/')[1]
-      callback(
-        null,
-        `images/post-${file.fieldname}-${Date.now()}.${extenstion}`
-      )
+      callback(null, `/post-${file.fieldname}-${Date.now()}.${extenstion}`)
     }
   })
   const ImageFilter = {

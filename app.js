@@ -9,7 +9,7 @@ connectionDB()
 const app = createServer()
 
 //Server Listening on port
-let port = process.env.PORT || 3500
+let port =  3500
 http.createServer(app).listen(port, () => {
   console.log(`Server started on http://localhost:${port}`)
 })
