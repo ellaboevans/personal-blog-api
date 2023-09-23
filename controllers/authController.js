@@ -5,10 +5,15 @@ const { STATUS } = require('../utils/utils.js')
 
 const authController = {
   registerUser: async (req, res) => {
-    const { username, email, password, confirmPassword } = req.body
+    const { firstName, lastName, username, email, password } = req.body
     try {
-      if (!username || !email || !password || !confirmPassword) {
+      if (!username || !email || !password) {
         res.status(STATUS.BAD_REQUEST.code).json(STATUS.BAD_REQUEST.message)
+        return
+      } else if (password.length < 8) {
+        res
+          .status(STATUS.BAD_REQUEST.code)
+          .json('Password must be at least 8 characters')
         return
       }
       const isUser = await User.findOne({ username })
@@ -22,20 +27,18 @@ const authController = {
       const SALT_FACTOR = 10
       const salt = await bcrypt.genSalt(SALT_FACTOR)
       const hashedPassword = await bcrypt.hash(password, salt)
-      const hashedConfirmPassword = await bcrypt.hash(confirmPassword, salt)
-	
+
       const newUser = await new User({
+        firstName,
+        lastName,
         username,
         email,
-        password: hashedPassword,
-	confirmPassword: hashedConfirmPassword
+        password: hashedPassword
       })
-      if(password !== confirmPassword){
-	 res.status(STATUS.BAD_REQUEST.code).json("Passwords do not match")
-      }else{
-	 await newUser.save()
-	 res.status(STATUS.CREATED.code).json(`${newUser.username}'s account created successfully`)
-      }
+      await newUser.save()
+      res
+        .status(STATUS.CREATED.code)
+        .json(`${newUser.firstName}'s account created successfully`)
     } catch (error) {
       console.error(error)
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
@@ -55,7 +58,7 @@ const authController = {
       if (isValidated) {
         //User is logged in
         const token = jwt.sign(
-          { username, id: isUser._id },
+          { username, id: isUser._id, firstName: isUser.firstName },
           process.env.JWT_SECRET_KEY
         )
         if (!token) {
