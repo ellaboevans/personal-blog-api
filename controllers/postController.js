@@ -1,5 +1,6 @@
 const Post = require('../models/Post')
 const { STATUS } = require('../utils/utils')
+const jwt = require('jsonwebtoken')
 
 const blogControllers = {
   getAllPosts: async (req, res) => {
@@ -13,9 +14,13 @@ const blogControllers = {
       } else {
         try {
           if (tag) {
-            posts = await Post.find({ tag }).sort({ _id: -1 })
+            posts = await Post.find({ tag })
+              .sort({ _id: -1 })
+              .populate('author', ['firstName', 'lastName'])
           } else {
-            posts = await Post.find().sort({ _id: -1 })
+            posts = await Post.find()
+              .sort({ _id: -1 })
+              .populate('author', ['firstName', 'lastName'])
           }
           await res.status(STATUS.SUCCESS.code).json(posts)
         } catch (error) {
@@ -30,17 +35,22 @@ const blogControllers = {
   },
   createPost: async (req, res) => {
     const { path } = req.file
-    const { title, content, summary, author, tag } = req.body
+    const { title, content, summary, tag } = req.body
     if (!title || !content || !summary) {
       res.status(STATUS.BAD_REQUEST.code).json(STATUS.BAD_REQUEST.message)
       return
     }
     try {
+      const { token } = req.cookies
+      const verified = jwt.verify(token, process.env.JWT_SECRET_KEY)
+      if (verified === null) {
+        res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
+      }
       const post = new Post({
         title,
         content,
         summary,
-        author,
+        author: verified.id,
         tag,
         image: path
       })
@@ -55,7 +65,10 @@ const blogControllers = {
   getSinglePost: async (req, res) => {
     const { slug } = req.params
     try {
-      const post = await Post.findOne({ slug })
+      const post = await Post.findOne({ slug }).populate('author', [
+        'firstName',
+        'lastName'
+      ])
       if (post === null) {
         res.status(STATUS.NOT_FOUND.code).json(STATUS.NOT_FOUND.message)
         return

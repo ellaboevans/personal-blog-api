@@ -26,7 +26,12 @@ const UserSchema = Schema(
       type: String,
       required: true,
       length: 8
-    }
+    },
+    confirmPassword: {
+      type: String,
+      required: true,
+      length: 8
+		    },
   },
   { timestamps: true }
 )
