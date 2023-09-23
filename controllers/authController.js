@@ -5,9 +5,9 @@ const { STATUS } = require('../utils/utils.js')
 
 const authController = {
   registerUser: async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password, confirmPassword } = req.body
     try {
-      if (!username || !email || !password) {
+      if (!username || !email || !password || !confirmPassword) {
         res.status(STATUS.BAD_REQUEST.code).json(STATUS.BAD_REQUEST.message)
         return
       }
@@ -22,16 +22,20 @@ const authController = {
       const SALT_FACTOR = 10
       const salt = await bcrypt.genSalt(SALT_FACTOR)
       const hashedPassword = await bcrypt.hash(password, salt)
-
+      const hashedConfirmPassword = await bcrypt.hash(confirmPassword, salt)
+	
       const newUser = await new User({
         username,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+	confirmPassword: hashedConfirmPassword
       })
-      await newUser.save()
-      res
-        .status(STATUS.CREATED.code)
-        .json(`${newUser.username}'s account created successfully`)
+      if(password !== confirmPassword){
+	 res.status(STATUS.BAD_REQUEST.code).json("Passwords do not match")
+      }else{
+	 await newUser.save()
+	 res.status(STATUS.CREATED.code).json(`${newUser.username}'s account created successfully`)
+      }
     } catch (error) {
       console.error(error)
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
