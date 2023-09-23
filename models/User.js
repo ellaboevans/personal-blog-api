@@ -2,6 +2,16 @@ const { Schema, model } = require('mongoose')
 
 const UserSchema = Schema(
   {
+    firstName: {
+      type: String,
+      required: true,
+      unique: false
+    },
+    lastName: {
+      type: String,
+      required: true,
+      unique: false
+    },
     username: {
       type: String,
       required: true,
@@ -14,12 +24,9 @@ const UserSchema = Schema(
     },
     password: {
       type: String,
-      required: true
-    },
-    confirmPassword: {
-    type: String,
-    required: true
-    },
+      required: true,
+      length: 8
+    }
   },
   { timestamps: true }
 )
