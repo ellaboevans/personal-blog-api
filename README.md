@@ -1,7 +1,8 @@
 # OxConcept Blog Backend API
 
 [![Build Status](https://img.shields.io/travis/user/repo.svg?style=flat-square)](https://travis-ci.org/user/repo)
-[![License](https://img.shields.io/github/license/user/repo.svg?style=flat-square)](https://github.com/user/repo/blob/master/LICENSE)
+
+<!-- [![License](https://img.shields.io/github/license/user/repo.svg?style=flat-square)](https://github.com/user/repo/blob/master/LICENSE) -->
 
 This project is a robust API designed to empower users to create and publish blogs seamlessly through a frontend interface. It offers a user-friendly platform where writers can draft and share their thoughts with the world. Below are the key features and components of this project:
 
@@ -88,9 +89,9 @@ Unlock the potential of blogging in your application with our easy-to-use API. G
 
 - `GET /api/v1/posts:` Get a list of all blog posts.
 - `POST /api/v1/posts:` Create a new blog post.
-- `GET /api/v1/posts/:slug:` Get a specific blog post by slug.
-- `PATCH /api/v1/posts/:postId:` Update a blog post by ID.
-- `DELETE /api/v1/posts/:postId:` Delete a blog post by ID.
+- `GET /api/v1/posts/:slug:` Get a specific blog post by `slug`.
+- `PATCH /api/v1/posts/:postId:` Update a blog post by `postId`.
+- `DELETE /api/v1/posts/:postId:` Delete a blog post by `postId`.
 
 ```javascript
 //sample posts
