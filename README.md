@@ -163,12 +163,14 @@ This project is licensed under the MIT License.
 
 ## Author
 
-![Author's Profile Picture](https://avatars.githubusercontent.com/u/74984305?v=4)
+## About the Author
+
+<img src="https://avatars.githubusercontent.com/u/74984305?v=4" alt="Evans Elabo's Profile Picture" width="150" height="150" style="border-radius: 50%;">
 
 **Evans Elabo**
 
-- [Author's Website](https://codeconcept.vercel.app)
-- [Author's Email](mailto:ellaboevans@email.com)
+- [Portfolio](https://codeconcept.vercel.app)
+- [E-Mail Me](mailto:ellaboevans@email.com)
 
 ## About the Author
 
