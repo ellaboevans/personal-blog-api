@@ -1,9 +1,5 @@
 # OxConcept Blog Backend API
 
-[![Build Status](https://img.shields.io/travis/user/repo.svg?style=flat-square)](https://travis-ci.org/user/repo)
-
-<!-- [![License](https://img.shields.io/github/license/user/repo.svg?style=flat-square)](https://github.com/user/repo/blob/master/LICENSE) -->
-
 This project is a robust API designed to empower users to create and publish blogs seamlessly through a frontend interface. It offers a user-friendly platform where writers can draft and share their thoughts with the world. Below are the key features and components of this project:
 
 ## Features:
