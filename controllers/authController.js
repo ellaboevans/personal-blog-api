@@ -69,7 +69,7 @@ const authController = {
           { username, id: isUser._id, firstName: isUser.firstName },
           process.env.JWT_SECRET_KEY
         )
-        if (!token) {
+        if (token === null) {
           res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
         }
         res
@@ -92,8 +92,14 @@ const authController = {
     const verified = jwt.verify(token, process.env.JWT_SECRET_KEY)
     if (verified === null) {
       res.status(STATUS.SERVER_ERROR.code).json(STATUS.SERVER_ERROR.message)
+      return
     }
     res.status(STATUS.SUCCESS.code).json(verified)
+    const Token = req.headers.authorization // Get the token from the request header
+    if (!Token) {
+      // Handle the case where no token is provided
+      return res.status(401).json({ error: 'Token not provided' })
+    }
   },
   logoutUser: (req, res) => {
     res
