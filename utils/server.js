@@ -13,7 +13,7 @@ const createServer = () => {
   const app = express()
 
   //Middlewares
-  app.use(cors())
+  app.use(cors({ credentials: true, origin: 'https://oxconcept.vercel.app' }))
   app.use(morgan('short'))
   app.use(express.json())
   app.use(bodyParser.urlencoded({ extended: false }))
